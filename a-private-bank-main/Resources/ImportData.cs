@@ -1,14 +1,15 @@
 ﻿using a_private_bank_main.Contracts;
 using a_private_bank_main.Models;
+using a_private_bank_main.Models;
 using CsvHelper;
+using CsvHelper.Configuration;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using a_private_bank_main.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace a_private_bank_main.Resources
 {
@@ -25,23 +26,37 @@ namespace a_private_bank_main.Resources
         {
             try
             {
-                var dataDocPath = @"C:\Users\0209255666080\source\Projects 2026\Downloads\account_statement_1-Dec-2025_to_14-Mar-2026.csv";
+                var folderPath = @"C:\Users\0209255666080\source\Projects 2026\Documents";
 
-                using (var readDoc = new StreamReader(dataDocPath))
+                var dataDocFile = new DirectoryInfo(folderPath)
+                    .GetFiles("*.csv")
+                    .OrderByDescending(x => x.LastWriteTime)
+                    .FirstOrDefault();
 
-                using (var docContent = new CsvReader(readDoc, CultureInfo.InvariantCulture))
+                if (dataDocFile == null)
+                    throw new FileNotFoundException("No CSV files found in the folder.");
+
+                // 🔥 PROPER CONFIG (THIS FIXES CS0106 / CONFIG ERRORS)
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                 {
-                    var docRecords = docContent.GetRecords<TransactionsStatement>().Where(x => x.Balance >= 0).ToList();
+                    HeaderValidated = null,
+                    MissingFieldFound = null,
+                    TrimOptions = TrimOptions.Trim,
+                    PrepareHeaderForMatch = args => args.Header?.Trim()
+                };
 
+                using var readDoc = new StreamReader(dataDocFile.FullName);
+                using var csv = new CsvReader(readDoc, config);
 
-                    if(docRecords == null || !docRecords.Any())
-                    {
-                        throw new InvalidOperationException("No valid records found in the CSV file.");
-                    }
+                var records = csv
+                    .GetRecords<TransactionsStatement>()
+                    .Where(x => x.Balance >= 0)
+                    .ToList();
 
-                    return docRecords;
-                }
+                if (!records.Any())
+                    throw new InvalidOperationException("No valid records found in the CSV file.");
 
+                return records;
             }
             catch (Exception e)
             {
