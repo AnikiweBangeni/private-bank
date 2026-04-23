@@ -13,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPersonResourceContracts, GetPerson>();
 builder.Services.AddScoped<IDataResourceContracts, ImportData>();
+builder.Services.AddScoped<IIncomeResourceContract, MonthlyCycle> ();
 builder.Services.AddDbContext<AprivateBankContext>(options =>
     options.UseSqlServer(( "Server=localhost\\SQLEXPRESS03;Database=APrivateBank;Trusted_Connection=True;TrustServerCertificate=True;" )));
 

@@ -12,14 +12,16 @@ namespace a_private_bank_api.Controllers
     {
         private readonly IDataResourceContracts _dataResourceContracts;
         private readonly IPersonResourceContracts _personResourceContracts;
+        private readonly IIncomeResourceContract _incomeResourceContract;
 
-        public APrivateBankController(IDataResourceContracts dataResourceContracts, IPersonResourceContracts personResourceContracts)
+        public APrivateBankController(IDataResourceContracts dataResourceContracts, IPersonResourceContracts personResourceContracts, IIncomeResourceContract incomeResourceContract)
         {
             _dataResourceContracts = dataResourceContracts;
             _personResourceContracts = personResourceContracts;
+            _incomeResourceContract = incomeResourceContract;
         }
 
-         [HttpGet("GetPersonAsync")]
+        [HttpGet("GetPersonAsync")]
         public async Task<IActionResult> GetPersonAsync(int personId )
         {
             var results = await _personResourceContracts.GetPersonAsync(personId);
@@ -50,5 +52,11 @@ namespace a_private_bank_api.Controllers
             return Ok(people);
         }
 
+        [HttpGet("GetCycleIncomeAsync")]
+        public async Task<IActionResult> GetCycleIncomeAsync( )
+        {
+            var cycleIncome = await _incomeResourceContract.GetCycleIncomeAsync();
+            return Ok(cycleIncome);
+        }
     }
 }
