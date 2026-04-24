@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace a_private_bank_main.Resources
 {
-    
+
     public class MonthlyCycle : IIncomeResourceContract
     {
         private readonly AprivateBankContext _dbContext;
@@ -26,16 +26,32 @@ namespace a_private_bank_main.Resources
             var today = DateTime.Today;
             var cycleStart = MonthlyCycleIncome.GetCycleStart(today);
 
-            var incomes =  _dbContext.TransactionsStatements
+            var incomes = _dbContext.TransactionsStatements
                 .Where(a =>
                     a.ParentCategory == "Salary" && a.OriginalDescription.Contains("CASHFOCUS SALARY") &&
                     a.TransactionDate >= cycleStart &&
                     a.TransactionDate <= today).FirstOrDefaultAsync().Result;
 
-            return new IncomeValueResponseModel { Date = incomes.TransactionDate, Amount = incomes.MoneyIn , Description = incomes.Description};
+            return new IncomeValueResponseModel { Date = incomes.TransactionDate, Amount = incomes.MoneyIn, Description = incomes.Description };
 
         }
 
+        //public async Task<>
 
+        //public async Task<FixedExpense> PutCycleFixedExpenseAsync(FixedExpense fixedExpense)
+        //{
+        //    var today = DateTime.Today;
+        //    var cycleStart = MonthlyCycleIncome.GetCycleStart(today);
+        //    var fixedExpense = _dbContext.FixedExpenses.AddRangeAsync(new FixedExpense
+        //    {
+        //        Name = "Rent",
+        //        Amount = 1200,
+        //        DueDate = cycleStart.AddDays(5),
+        //        IsPaid = false,
+        //        PeriodId = _dbContext.BudgetPeriods.Where(a => a.StartDate <= cycleStart && a.EndDate >= cycleStart).FirstOrDefault().Id
+        //    }).Result;
+
+
+        //}
     }
 }
