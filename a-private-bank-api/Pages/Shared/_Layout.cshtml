@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A private, session-only spending dashboard for CSV bank statements." />
+    <title>@ViewData["Title"] · A Private Bank</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to dashboard</a>
+    <header class="site-header"><div class="shell header-inner">
+        <a class="brand" asp-page="/Index" aria-label="A Private Bank home"><span class="brand-mark" aria-hidden="true">A</span><span>A Private Bank</span></a>
+        <span class="privacy-chip"><span aria-hidden="true">●</span> Session private</span>
+    </div></header>
+    <main id="main-content" class="shell">@RenderBody()</main>
+    <footer><div class="shell">Your statement stays in this browser tab. No account, database, or upload server.</div></footer>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

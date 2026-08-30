@@ -1,19 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>a_private_bank_api</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
-	  
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.5" />
+    <Compile Remove="Controllers\**\*.cs" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\a-private-bank-main\a-private-bank-main.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -1,194 +1,79 @@
-ALL CATEGORIES (FULL LIST)
+# A Private Bank — Spending Dashboard
 
-Cash:
+A private, local-first ASP.NET Core Razor Pages dashboard for understanding personal spending from CSV bank statements. Statement rows are parsed entirely in the browser and stored in `sessionStorage`: no transaction is posted to the ASP.NET server or saved in a database.
 
-* Cash Withdrawal
+## What it shows
 
-Cash Deposit:
+- Total spent in the current calendar month
+- Previous-month spending and percentage comparison
+- Projected current-month spend based on month-to-date pace
+- Typical weekly cash need based on the average of completed months
+- Latest available account balance
+- Six-month spending trend and top categories
+- Searchable recent transactions
+- Multiple-statement import with duplicate detection
 
-* Cash Deposit
+## Run in Visual Studio
 
-Communication:
+1. Clone `https://github.com/AnikiweBangeni/private-bank.git`.
+2. Open `a-private-bank-main.sln` in Visual Studio.
+3. Ensure the **ASP.NET and web development** workload and .NET 9 SDK are installed.
+4. Select the `https` profile and press **F5**.
 
-* Cellphone
-* Internet
-* Telephone
+Or run from a terminal:
 
-Education:
+```powershell
+dotnet restore a-private-bank-main.sln
+dotnet run --project a-private-bank-api
+```
 
-* Education
+## Statement format
 
-Entertainment:
+Export a CSV statement from your bank. The parser accepts commas or semicolons, quoted fields, South African `dd/MM/yyyy` dates, ISO dates, and common header variations.
 
-* Alcohol
-* Digital Subscriptions
-* Going Out
+For a safe first run, upload the fictional [`samples/sample-bank-statement.csv`](samples/sample-bank-statement.csv) file included in this repository.
 
-Fees:
+Required:
 
-* Fees
+- `Transaction Date`, `Posting Date`, or `Date`
+- `Money Out`, `Debit`, or a signed `Amount` column
 
-Food:
+For a signed `Amount` column, negative values are treated as spending and positive values as money in.
 
-* Groceries
-* Restaurants
-* Takeaways
+Recommended:
 
-Household:
+- `Description`
+- `Category` / `Parent Category`
+- `Money In` / `Credit`
+- `Fee`
+- `Balance`
+- `Nr`, transaction ID, or reference
 
-* Electricity
-* Furniture & Appliances
-* Home Maintenance
-* Rent
+The existing project format (`Nr, Account, Posting Date, Transaction Date, Description, Original Description, Parent Category, Category, Money In, Money Out, Fee, Balance`) is supported.
 
-Insurance:
+## Privacy model
 
-* Life Insurance
-* Vehicle Insurance
+- The file input is read with the browser File API; there is no upload endpoint.
+- Parsed rows are kept in the current tab's `sessionStorage` so they survive a refresh.
+- Closing the tab/window clears that tab's session data according to normal browser behavior.
+- **Clear private data** removes the stored rows immediately.
+- No database, account, telemetry, third-party script, or external API is used.
 
-Interest:
+`sessionStorage` is convenient privacy, not encryption. Do not use the app on a shared or untrusted computer, and keep the original statement file protected.
 
-* Interest
+## Calculation notes
 
-Investment Income:
+- Spending is `Money Out + Fee` for each transaction.
+- Typical weekly need is the average spend of completed calendar months divided by `4.345` weeks per month.
+- When no completed month exists, the weekly estimate uses the current month-to-date daily pace.
+- Projected month spend extrapolates current spend by elapsed days across the number of days in the current month.
 
-* Investment Income
+## Project structure
 
-Loans & Accounts:
+```text
+a-private-bank-api/       Active Razor Pages dashboard
+a-private-bank-main/      Earlier database prototype retained for history/reference
+.github/workflows/ci.yml  Restore, formatting, and Release build checks
+```
 
-* Loan Payments
-
-Medical:
-
-* Doctors & Therapists
-
-Other Income:
-
-* Other Income
-
-Payment Received:
-
-* Payment Received
-
-Personal & Family:
-
-* Children & Dependants
-* Clothing & Shoes
-* Digital Payments
-* Personal Care
-* Sport & Hobbies
-
-Salary:
-
-* Salary
-
-Savings & Investments:
-
-* Investments
-
-Transfer:
-
-* Transfer
-
-Transport:
-
-* Fuel
-* Licence
-* Parking
-* Tolls
-* Vehicle Maintenance
-* Vehicle Tracking
-
-Uncategorised:
-
-* Uncategorised
-
-EXPENSE CATEGORIES ONLY
-
-Cash:
-
-* Cash Withdrawal
-
-Communication:
-
-* Cellphone
-* Internet
-* Telephone
-
-Education:
-
-* Education
-
-Entertainment:
-
-* Alcohol
-* Digital Subscriptions
-* Going Out
-
-Food:
-
-* Groceries
-* Restaurants
-* Takeaways
-
-Household:
-
-* Electricity
-* Furniture & Appliances
-* Home Maintenance
-* Rent
-
-Insurance:
-
-* Life Insurance
-* Vehicle Insurance
-
-Loans & Accounts:
-
-* Loan Payments
-
-Medical:
-
-* Doctors & Therapists
-
-Personal & Family:
-
-* Children & Dependants
-* Clothing & Shoes
-* Digital Payments
-* Personal Care
-* Sport & Hobbies
-
-Savings & Investments:
-
-* Investments
-
-Transfer:
-
-* Transfer
-
-Transport:
-
-* Fuel
-* Licence
-* Parking
-* Tolls
-* Vehicle Maintenance
-* Vehicle Tracking
-
-Uncategorised:
-
-* Uncategorised
-
-NOTE:
-Excluded from expenses (income/neutral):
-
-* Fees
-* Cash Deposit
-* Interest
-* Investment Income
-* Other Income
-* Payment Received
-* Salary
-
-Transfer is included because some transfers are outgoing payments.
+The earlier SQL Server prototype is no longer part of the active solution or runtime. It remains in the repository so the project's evolution is reviewable.

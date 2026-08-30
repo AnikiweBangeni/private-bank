@@ -1,0 +1,64 @@
+@page
+@model IndexModel
+@{ ViewData["Title"] = "Spending dashboard"; }
+
+<noscript><div class="notice error">JavaScript is required to analyse statements privately in your browser.</div></noscript>
+
+<section class="hero">
+    <div>
+        <p class="eyebrow">YOUR MONEY, CLEARLY</p>
+        <h1>See where your money goes.</h1>
+        <p class="hero-copy">Upload a CSV bank statement to compare previous months, track this month, and estimate the amount you typically need each week.</p>
+        <div class="privacy-note"><span class="lock" aria-hidden="true">⌁</span><span><strong>Private by design.</strong> Analysis happens in this tab. Nothing is uploaded to the server.</span></div>
+    </div>
+    <div class="upload-card">
+        <label class="drop-zone" id="dropZone" for="statementFile">
+            <span class="upload-icon" aria-hidden="true">↑</span>
+            <strong>Drop your CSV statement here</strong>
+            <span>or choose a file from your computer</span>
+            <span class="file-button">Choose statement</span>
+            <input id="statementFile" type="file" accept=".csv,text/csv" multiple />
+        </label>
+        <div class="upload-actions"><button id="demoButton" class="text-button" type="button">Try sample data</button><span>CSV only · Multiple files supported</span></div>
+    </div>
+</section>
+
+<div id="statusMessage" class="notice" role="status" aria-live="polite" hidden></div>
+
+<section id="emptyState" class="empty-state">
+    <div class="empty-visual" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    <h2>Your dashboard is ready</h2>
+    <p>Upload one or more CSV statements above. Expected columns include transaction date, description, money out/debit, category, and optionally balance.</p>
+</section>
+
+<div id="dashboard" hidden>
+    <div class="dashboard-heading">
+        <div><p class="eyebrow">SPENDING OVERVIEW</p><h2 id="dashboardTitle">Your dashboard</h2><p id="dataSummary" class="muted"></p></div>
+        <button id="clearButton" class="button secondary" type="button">Clear private data</button>
+    </div>
+
+    <section class="metrics" aria-label="Financial summary">
+        <article class="metric-card accent"><div class="metric-label"><span>This month</span><span aria-hidden="true">↗</span></div><strong id="currentSpend">R0.00</strong><span id="currentComparison" class="metric-detail">No previous month yet</span></article>
+        <article class="metric-card"><div class="metric-label"><span>Previous month</span><span aria-hidden="true">◷</span></div><strong id="previousSpend">R0.00</strong><span id="previousLabel" class="metric-detail">—</span></article>
+        <article class="metric-card"><div class="metric-label"><span>Typical weekly need</span><span aria-hidden="true">▤</span></div><strong id="weeklyNeed">R0.00</strong><span class="metric-detail">Based on completed months</span></article>
+        <article class="metric-card"><div class="metric-label"><span>Latest balance</span><span aria-hidden="true">◎</span></div><strong id="latestBalance">—</strong><span id="projectedSpend" class="metric-detail">Projected month: —</span></article>
+    </section>
+
+    <section class="dashboard-grid">
+        <article class="panel wide">
+            <div class="panel-heading"><div><p class="eyebrow">MONTHLY TREND</p><h3>Spending by month</h3></div><span class="legend"><i></i> Money out + fees</span></div>
+            <div id="monthlyChart" class="bar-chart" role="img" aria-label="Monthly spending bar chart"></div>
+        </article>
+        <article class="panel">
+            <div class="panel-heading"><div><p class="eyebrow">BREAKDOWN</p><h3 id="categoryTitle">Top categories</h3></div></div>
+            <div id="categoryList" class="category-list"></div>
+        </article>
+    </section>
+
+    <section class="panel transactions-panel">
+        <div class="panel-heading"><div><p class="eyebrow">RECENT ACTIVITY</p><h3>Latest transactions</h3></div><label class="search-label">Search <input id="transactionSearch" type="search" placeholder="Description or category" /></label></div>
+        <div class="table-wrap"><table><thead><tr><th>Date</th><th>Description</th><th>Category</th><th class="number">Money in</th><th class="number">Money out</th><th class="number">Balance</th></tr></thead><tbody id="transactionRows"></tbody></table></div>
+    </section>
+</div>
+
+@section Scripts { <script src="~/js/dashboard.js" asp-append-version="true" defer></script> }

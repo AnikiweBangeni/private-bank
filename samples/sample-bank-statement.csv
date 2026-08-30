@@ -1,0 +1,21 @@
+Nr,Account,Posting Date,Transaction Date,Description,Original Description,Parent Category,Category,Money In,Money Out,Fee,Balance
+1001,DEMO-001,2026-05-01,01/05/2026,Salary,Demo employer,Income,Salary,30000.00,,,30000.00
+1002,DEMO-001,2026-05-03,03/05/2026,Rent,Demo property,Home,Rent,,8500.00,,21500.00
+1003,DEMO-001,2026-05-08,08/05/2026,Groceries,Demo supermarket,Food,Groceries,,1260.45,,20239.55
+1004,DEMO-001,2026-05-15,15/05/2026,Electricity,Demo utility,Home,Utilities,,780.00,2.50,19457.05
+1005,DEMO-001,2026-05-24,24/05/2026,Fuel,Demo fuel station,Transport,Fuel,,920.00,,18537.05
+1006,DEMO-001,2026-06-01,01/06/2026,Salary,Demo employer,Income,Salary,30000.00,,,48537.05
+1007,DEMO-001,2026-06-03,03/06/2026,Rent,Demo property,Home,Rent,,8500.00,,40037.05
+1008,DEMO-001,2026-06-09,09/06/2026,Groceries,Demo supermarket,Food,Groceries,,1384.20,,38652.85
+1009,DEMO-001,2026-06-18,18/06/2026,Internet,Demo fibre provider,Home,Internet,,799.00,,37853.85
+1010,DEMO-001,2026-06-26,26/06/2026,Restaurant,Demo restaurant,Food,Eating out,,540.00,,37313.85
+1011,DEMO-001,2026-07-01,01/07/2026,Salary,Demo employer,Income,Salary,30000.00,,,67313.85
+1012,DEMO-001,2026-07-03,03/07/2026,Rent,Demo property,Home,Rent,,8500.00,,58813.85
+1013,DEMO-001,2026-07-11,11/07/2026,Groceries,Demo supermarket,Food,Groceries,,1198.75,,57615.10
+1014,DEMO-001,2026-07-19,19/07/2026,Insurance,Demo insurer,Financial,Insurance,,1450.00,,56165.10
+1015,DEMO-001,2026-07-27,27/07/2026,Fuel,Demo fuel station,Transport,Fuel,,875.40,,55289.70
+1016,DEMO-001,2026-08-01,01/08/2026,Salary,Demo employer,Income,Salary,30000.00,,,85289.70
+1017,DEMO-001,2026-08-03,03/08/2026,Rent,Demo property,Home,Rent,,8500.00,,76789.70
+1018,DEMO-001,2026-08-08,08/08/2026,Groceries,Demo supermarket,Food,Groceries,,1325.60,,75464.10
+1019,DEMO-001,2026-08-17,17/08/2026,Electricity,Demo utility,Home,Utilities,,825.00,2.50,74636.60
+1020,DEMO-001,2026-08-25,25/08/2026,Fuel,Demo fuel station,Transport,Fuel,,940.00,,73696.60
